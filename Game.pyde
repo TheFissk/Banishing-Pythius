@@ -26,9 +26,11 @@ def setup():
     #-------------------------------------------------
     
     #LVL 2 THINGS-------------------------------------
-    global flying
+    global flying #array of the flying objects in stage 2
+    global flyingSize #the size of the flying array
     flying = []
-    for g in range (9):
+    flyingSize = 10
+    for g in range (flyingSize):
         flying.append(Flying())
     #--------------------------------------------------
     
@@ -50,37 +52,7 @@ def setup():
     ground.drawFloor(c) # (floor image)
     walls.drawWall(a,a,b,b,d) # (topwall image, botwall image, leftwall image, rightwall image)
     Me.drawChar()
-    
-def move(): #movement and collision checks Left, Right, Up, Down respectively
-    if(checkCollision((Me.x - 2), (Me.y+2)) == False and checkCollision((Me.x - 2), (Me.y + 42)) == False):
-        if(Keys[0] == True):
-            if(Me.x >= 55 and stage==2):
-                Me.moveChar(-4,0)
-            else: 
-                if(stage == 3):
-                    Me.moveChar(-4, 0)
-    if(checkCollision((Me.x +2), (Me.y+42)) == False and checkCollision((Me.x + 2), (Me.y + 42)) == False and checkCollision((Me.x + 24), (Me.y)) == False and checkCollision((Me.x + 24), (Me.y + 42)) == False):
-        if(Keys[1] == True):
-            if(Me.x <= 1425 and stage == 2):
-                Me.moveChar(4, 0)
-            else:
-                if(stage == 3):
-                    Me.moveChar(4, 0)
-    if(checkCollision((Me.x+2), (Me.y-2)) == False and checkCollision((Me.x + 22), (Me.y - 2)) == False):
-        if(Keys[2] == True):
-            if(((Me.y >=106) or (Me.x <1000 and Me.x >500)) and stage == 2):
-                Me.moveChar(0, -4)
-            else: 
-                if(stage == 3):
-                    Me.moveChar(0, -4)
-    if(checkCollision((Me.x+2), (Me.y+2)) == False and checkCollision((Me.x + 22), (Me.y + 2)) == False and checkCollision((Me.x + 2), (Me.y + 43)) == False and checkCollision((Me.x + 22), (Me.y + 43)) == False):
-        if(Keys[3] == True):
-            if(Me.y <= 905 and stage == 2):
-                Me.moveChar(0, 4)
-            else:
-                if(stage == 3):
-                    Me.moveChar(0, 4)
-                    
+                        
 
 #----------------------------------------DRAW-------------------------------------------------                
 def draw():
@@ -111,7 +83,7 @@ def draw():
         rect(0,0,500,1000)#placeholder for left wall
         rect(1000,0,500,1000)#placeholder for right wall
         
-        for g in range (9): #moves and draws the flying objects in stage 3
+        for g in range (flyingSize): #moves and draws the flying objects in stage 3
             flying[g].moveFlying()
             flying[g].drawFlying()
             if(flying[g].y > 990 and Me.y > 300):
@@ -124,7 +96,7 @@ def draw():
 
         while(j<20):
             while(k<20):
-                for g in range (9):
+                for g in range (flyingSize):
                     if(Me.x == flying[g].x + k and Me.y == flying[g].y + 30 + j):
                         death()
                         stage = 1
@@ -148,13 +120,13 @@ def draw():
 
 
 
-#--------------------------------------------------------------------------------------------        
+#----------------------------------------FUNCTIONS----------------------------------------------------        
 def death():
     clear()
     removeCollision()
     Me.x = 750
     Me.y = 900
-    for g in range (9):
+    for g in range (flyingSize):
         flying[g].y=0
 
     
@@ -212,6 +184,35 @@ def checkCollision(x, y): #takes in the characters x and y coordinates and check
     else:
         return(False)
 
+def move(): #movement and collision checks Left, Right, Up, Down respectively
+    if(checkCollision((Me.x - 2), (Me.y+2)) == False and checkCollision((Me.x - 2), (Me.y + 42)) == False):
+        if(Keys[0] == True):
+            if(Me.x >= 55 and stage==2):
+                Me.moveChar(-4,0)
+            else: 
+                if(stage == 3):
+                    Me.moveChar(-4, 0)
+    if(checkCollision((Me.x +2), (Me.y+42)) == False and checkCollision((Me.x + 2), (Me.y + 42)) == False and checkCollision((Me.x + 24), (Me.y)) == False and checkCollision((Me.x + 24), (Me.y + 42)) == False):
+        if(Keys[1] == True):
+            if(Me.x <= 1425 and stage == 2):
+                Me.moveChar(4, 0)
+            else:
+                if(stage == 3):
+                    Me.moveChar(4, 0)
+    if(checkCollision((Me.x+2), (Me.y-2)) == False and checkCollision((Me.x + 22), (Me.y - 2)) == False):
+        if(Keys[2] == True):
+            if(((Me.y >=106) or (Me.x <1000 and Me.x >500)) and stage == 2):
+                Me.moveChar(0, -4)
+            else: 
+                if(stage == 3):
+                    Me.moveChar(0, -4)
+    if(checkCollision((Me.x+2), (Me.y+2)) == False and checkCollision((Me.x + 22), (Me.y + 2)) == False and checkCollision((Me.x + 2), (Me.y + 43)) == False and checkCollision((Me.x + 22), (Me.y + 43)) == False):
+        if(Keys[3] == True):
+            if(Me.y <= 905 and stage == 2):
+                Me.moveChar(0, 4)
+            else:
+                if(stage == 3):
+                    Me.moveChar(0, 4)
 
 
  
